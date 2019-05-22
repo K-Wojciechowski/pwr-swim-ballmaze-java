@@ -304,7 +304,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
                 try {
                     runGameTick();
                     draw();
-                    Thread.sleep(16);
+                    sleep(16);
                 } catch (InterruptedException ignored) { }
             }
         }
@@ -317,7 +317,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
             ballY_px += scrollDist_px;
             topY_px += scrollDist_px;
             // TODO collision detection
-            if (ballY_px - ballSize_px > heights[score]) {
+            if (ballY_px - (2 * ballSize_px) > heights[score]) {
                 score++;
             }
             if (score == Constants.FLOORS) {
