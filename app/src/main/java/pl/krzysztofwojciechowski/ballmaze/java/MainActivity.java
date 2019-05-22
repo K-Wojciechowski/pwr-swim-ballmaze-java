@@ -36,11 +36,9 @@ public class MainActivity extends AppCompatActivity {
         accelerometerListener = new AccelerometerListener();
     }
 
-
     @Override
     protected void onResume() {
         super.onResume();
-        Log.w("X", "onResume");
         sensorManager.registerListener(lightSensorListener, lightSensor, SensorManager.SENSOR_DELAY_NORMAL);
         sensorManager.registerListener(accelerometerListener, accelerometer, SensorManager.SENSOR_DELAY_GAME);
     }
@@ -48,9 +46,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        Log.w("X", "onPause");
         sensorManager.unregisterListener(lightSensorListener);
         sensorManager.unregisterListener(accelerometerListener);
+        gameView.stopGame();
     }
 
     class LightSensorListener implements SensorEventListener {
@@ -71,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onSensorChanged(SensorEvent event) {
             // https://gamedev.stackexchange.com/a/73294
-            lastVal = lastVal + Constants.ACCEL_ALPHA * (event.values[0] - lastVal);
+            lastVal += Constants.ACCEL_ALPHA * (event.values[0] - lastVal);
             gameView.handleAccelerometer(-lastVal * Constants.ACCEL_SENSITIVITY);
         }
 

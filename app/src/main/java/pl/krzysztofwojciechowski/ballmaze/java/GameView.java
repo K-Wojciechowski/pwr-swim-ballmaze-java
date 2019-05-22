@@ -72,17 +72,13 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
-        mode = GameMode.START;
-        try {
-            if (thread != null) thread.join();
-        } catch (InterruptedException ignored) {
-            // That should not fail.
-        }
+        stopGame();
     }
 
     private void draw() {
         if (!getHolder().getSurface().isValid()) return;
         canvas = getHolder().lockCanvas();
+        if (canvas == null) return;
         if (lightValue < Constants.DARKMODE_THRESHOLD) {
             canvas.drawColor(getColor(R.color.background_dark));
             paint.setColor(getColor(R.color.foreground_dark));
@@ -263,6 +259,15 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         score = 0;
         thread = new GameThread();
         thread.start();
+    }
+
+    public void stopGame() {
+        mode = GameMode.START;
+        try {
+            if (thread != null) thread.join();
+        } catch (InterruptedException ignored) {
+            // That should not fail.
+        }
     }
 
     // https://stackoverflow.com/a/32081250
