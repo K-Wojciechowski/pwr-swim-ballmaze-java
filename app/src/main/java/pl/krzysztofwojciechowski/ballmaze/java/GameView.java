@@ -251,7 +251,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         heights[0] = (int)getDim(R.dimen.first_floor_height);
         for (int i = 0; i < Constants.FLOORS; i++) {
             gaps[i] = (int)getDim(R.dimen.gap_margin_size) + rand.nextInt(range);
-            colors[i] = colorArray[rand.nextInt(colorArray.length)];
+            colors[i] = colorArray[i % colorArray.length];
             if (i != 0) heights[i] = heights[i - 1] + (int)getDim(R.dimen.distance_between_floors);
         }
 
